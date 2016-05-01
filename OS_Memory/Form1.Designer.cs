@@ -91,7 +91,8 @@
             this.list_holes.Location = new System.Drawing.Point(9, 121);
             this.list_holes.Name = "list_holes";
             this.list_holes.Size = new System.Drawing.Size(223, 134);
-            this.list_holes.TabIndex = 5;
+            this.list_holes.TabIndex = 10;
+            this.list_holes.TabStop = false;
             this.list_holes.UseCompatibleStateImageBehavior = false;
             this.list_holes.View = System.Windows.Forms.View.Details;
             // 
@@ -144,6 +145,7 @@
             this.tboxLimit.Name = "tboxLimit";
             this.tboxLimit.Size = new System.Drawing.Size(100, 20);
             this.tboxLimit.TabIndex = 1;
+            this.tboxLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tboxLimit_KeyPress);
             // 
             // tboxBase
             // 
@@ -151,6 +153,7 @@
             this.tboxBase.Name = "tboxBase";
             this.tboxBase.Size = new System.Drawing.Size(100, 20);
             this.tboxBase.TabIndex = 0;
+            this.tboxBase.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tboxBase_KeyPress);
             // 
             // groupBox2
             // 
@@ -174,6 +177,7 @@
             this.list_processes.Name = "list_processes";
             this.list_processes.Size = new System.Drawing.Size(115, 134);
             this.list_processes.TabIndex = 5;
+            this.list_processes.TabStop = false;
             this.list_processes.UseCompatibleStateImageBehavior = false;
             this.list_processes.View = System.Windows.Forms.View.Details;
             // 
@@ -202,7 +206,7 @@
             this.btn_process.Location = new System.Drawing.Point(9, 79);
             this.btn_process.Name = "btn_process";
             this.btn_process.Size = new System.Drawing.Size(117, 23);
-            this.btn_process.TabIndex = 2;
+            this.btn_process.TabIndex = 1;
             this.btn_process.Text = "Add Process";
             this.btn_process.UseVisualStyleBackColor = true;
             this.btn_process.Click += new System.EventHandler(this.btn_process_Click);
@@ -212,7 +216,8 @@
             this.tboxSize.Location = new System.Drawing.Point(9, 48);
             this.tboxSize.Name = "tboxSize";
             this.tboxSize.Size = new System.Drawing.Size(117, 20);
-            this.tboxSize.TabIndex = 1;
+            this.tboxSize.TabIndex = 0;
+            this.tboxSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tboxSize_KeyPress);
             // 
             // groupBox1
             // 
@@ -326,6 +331,7 @@
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(132, 85);
             this.listView1.TabIndex = 0;
+            this.listView1.TabStop = false;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 

@@ -31,10 +31,10 @@ namespace OS_Memory
         private void LogState(List<MemoryBlock> mem)
         {
             //AddRow("---", "---", "---");
-            while (list_state.Items.Count > 1)
+            while (list_state.Items.Count > 0)
             {
                 //leave the header
-                list_state.Items.RemoveAt(1);
+                list_state.Items.RemoveAt(0);
             }
             for (int i = 0; i < mem.Count; i++)
             {
@@ -48,8 +48,8 @@ namespace OS_Memory
             long _base = long.Parse(tboxBase.Text), _limit = long.Parse(tboxLimit.Text);
             tboxBase.Clear();
             tboxLimit.Clear();
-            list_holes.Items.Add(new ListViewItem(new[] { holes_counter.ToString(),_base.ToString(), _limit.ToString()}));
-
+            list_holes.Items.Add(new ListViewItem(new[] { holes_counter++.ToString(),_base.ToString(), _limit.ToString()}));
+            tboxBase.Focus();
         }
 
         private void btn_process_Click(object sender, EventArgs e)
@@ -59,6 +59,7 @@ namespace OS_Memory
             tboxSize.Clear();
             list_processes.Items.Add(new ListViewItem(new[] { name, _size.ToString()}));
             processes_counter++;
+            tboxSize.Focus();
         }
 
         private void btn_start_Click(object sender, EventArgs e)
@@ -66,7 +67,6 @@ namespace OS_Memory
             List<MemoryBlock> holes = getHoles();
             Queue<Process> processes = getProcesses();
             MemOrganizer mo = new MemOrganizer(processes, holes);
-            LogState(mo.memory.memory);
             string method = combo_method.Text;
             switch (method)
             {
@@ -80,8 +80,10 @@ namespace OS_Memory
                     memStates = mo.WorstFit();
                     break;
             }
-            LogState(memStates[0]);
+            state = 0;
+            LogState(memStates[state]);
             btn_next.Enabled = true;
+            btn_prev.Enabled = false;
         }
 
         private List<MemoryBlock> getHoles()
@@ -137,6 +139,33 @@ namespace OS_Memory
                 btn_prev.Enabled = false;
             else
                 btn_prev.Enabled = true;
+        }
+
+        private void tboxBase_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                tboxLimit.Focus();
+            }
+        }
+
+        private void tboxLimit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                btn_hole.PerformClick();
+            }
+        }
+
+        private void tboxSize_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                btn_process.PerformClick();
+            }
         }
 
     }

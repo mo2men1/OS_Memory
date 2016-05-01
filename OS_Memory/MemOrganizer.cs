@@ -44,7 +44,7 @@ namespace OS_Memory
         public List<List<MemoryBlock>> FirstFit()
         {
             List<List<MemoryBlock>> memStates = new List<List<MemoryBlock>>();
-            List<MemoryBlock> list = memory.memory.ToList();
+            List<MemoryBlock> list = cloneMemList(memory.memory);
             memStates.Add(list);
             int count = processes.Count;
             while (processes.Count > 0)
@@ -58,7 +58,7 @@ namespace OS_Memory
                     {
                         memory.Allocate(i, p);
                         Allocated = true;
-                        List<MemoryBlock> _list = memory.memory.ToList();
+                        List<MemoryBlock> _list = cloneMemList(memory.memory);
                         memStates.Add(_list);
                         break;
                     }
@@ -73,7 +73,8 @@ namespace OS_Memory
         public List<List<MemoryBlock>> BestFit()
         {
             List<List<MemoryBlock>> memStates = new List<List<MemoryBlock>>();
-            memStates.Add(new List<MemoryBlock>(memory.memory));
+            List<MemoryBlock> list = cloneMemList(memory.memory);
+            memStates.Add(list);
             int count = processes.Count;
             while (count-- > 0)
             {
@@ -94,7 +95,8 @@ namespace OS_Memory
                 {
                     memory.Allocate(min, p);
                     Allocated = true;
-                    memStates.Add(new List<MemoryBlock>(memory.memory));
+                    List<MemoryBlock> _list = cloneMemList(memory.memory);
+                    memStates.Add(_list);
                 }
                 if (!Allocated)
                     processes.Enqueue(p);
@@ -105,7 +107,8 @@ namespace OS_Memory
         public List<List<MemoryBlock>> WorstFit()
         {
             List<List<MemoryBlock>> memStates = new List<List<MemoryBlock>>();
-            memStates.Add(new List<MemoryBlock>(memory.memory));
+            List<MemoryBlock> list = cloneMemList(memory.memory);
+            memStates.Add(list);
             int count = processes.Count;
             while (count-- > 0)
             {
@@ -126,7 +129,8 @@ namespace OS_Memory
                 {
                     memory.Allocate(max, p);
                     Allocated = true;
-                    memStates.Add(new List<MemoryBlock>(memory.memory));
+                    List<MemoryBlock> _list = cloneMemList(memory.memory);
+                    memStates.Add(_list);
                 }
                 if (!Allocated)
                     processes.Enqueue(p);
@@ -144,6 +148,21 @@ namespace OS_Memory
             memory.Deallocate(index);
             memory.Allocate(index, p);
             backing_store.Add(existingProcess);
+        }
+
+
+        List<MemoryBlock> cloneMemList(List<MemoryBlock> _list)
+        {
+            List<MemoryBlock> newList = new List<MemoryBlock>();
+            foreach(MemoryBlock item in _list){
+                long _base = item.base_address;
+                long _limit = item.limit;
+                Process p = item.process;
+                MemoryBlock block = new MemoryBlock(_base,_limit);
+                block.process = p;
+                newList.Add(block);
+            }
+            return newList;
         }
 
     }
