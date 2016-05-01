@@ -1,9 +1,0 @@
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\bin\Debug\OS_Memory.exe.config
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\obj\Debug\OS_Memory.csprojResolveAssemblyReference.cache
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\obj\Debug\OS_Memory.Form1.resources
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\obj\Debug\OS_Memory.Properties.Resources.resources
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\obj\Debug\OS_Memory.csproj.GenerateResource.Cache
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\bin\Debug\OS_Memory.exe
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\bin\Debug\OS_Memory.pdb
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\obj\Debug\OS_Memory.exe
-c:\users\mo'men\documents\visual studio 2013\Projects\OS_Memory\OS_Memory\obj\Debug\OS_Memory.pdb
