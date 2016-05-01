@@ -8,9 +8,10 @@ namespace OS_Memory
 {
     class MemOrganizer
     {
-        private List<Process> backing_store;
+        private List<Process> backing_store = new List<Process>();
         private Queue<Process> processes;
-        private Queue<Process> unAllocatedProcesses = new Queue<Process>();
+        private List<Process> unAllocatedProcesses = new List<Process>();
+        private List<MemoryBlock> AllocatedProcesses = new List<MemoryBlock>();
         public Memory memory;
         
         public MemOrganizer(Queue<Process> _processes, List<MemoryBlock> _holes)
@@ -58,6 +59,7 @@ namespace OS_Memory
                     if (memory.memory[i].process == null && memory.memory[i].limit >= p.size)
                     {
                         memory.Allocate(i, p);
+                        AllocatedProcesses.Add(memory.memory[i]);
                         Allocated = true;
                         List<MemoryBlock> _list = cloneMemList(memory.memory);
                         memStates.Add(_list);
@@ -65,7 +67,7 @@ namespace OS_Memory
                     }
                 }
                 if (!Allocated)
-                    unAllocatedProcesses.Enqueue(p);
+                    unAllocatedProcesses.Add(p);
                 if (count == 0) break;
             }
             return memStates;
@@ -95,12 +97,13 @@ namespace OS_Memory
                 if (min >= 0)
                 {
                     memory.Allocate(min, p);
+                    AllocatedProcesses.Add(memory.memory[min]);
                     Allocated = true;
                     List<MemoryBlock> _list = cloneMemList(memory.memory);
                     memStates.Add(_list);
                 }
                 if (!Allocated)
-                    unAllocatedProcesses.Enqueue(p);
+                    unAllocatedProcesses.Add(p);
             }
             return memStates;
         }
@@ -129,26 +132,32 @@ namespace OS_Memory
                 if (max >= 0)
                 {
                     memory.Allocate(max, p);
+                    AllocatedProcesses.Add(memory.memory[max]);
                     Allocated = true;
                     List<MemoryBlock> _list = cloneMemList(memory.memory);
                     memStates.Add(_list);
                 }
                 if (!Allocated)
-                    unAllocatedProcesses.Enqueue(p);
+                    unAllocatedProcesses.Add(p);
             }
             return memStates;
         }
 
-        void swap(Process p, int index)
+        public void swap(int p_index, int index)
         {
-            if (memory.memory[index].process == null) throw new InvalidOperationException("Cannot swap a process whit a hole.");
+            var existing = memory.memory[index];
+            var p = unAllocatedProcesses[p_index];
+
+            if (memory.memory[index].process == null) throw new InvalidOperationException("Cannot swap a process with a hole.");
             if (memory.memory[index].limit < p.size && (index == memory.memory.Count - 1 || memory.memory[index+1].process != null))
                 throw new InvalidOperationException("Cannot swap with a process of smaller size");
 
-            var existingProcess = memory.memory[index].process;
             memory.Deallocate(index);
             memory.Allocate(index, p);
-            backing_store.Add(existingProcess);
+            backing_store.Add(existing.process);
+            AllocatedProcesses.Remove(existing);
+            AllocatedProcesses.Add(memory.memory[index]);
+            unAllocatedProcesses.RemoveAt(p_index);
         }
 
 
@@ -166,9 +175,14 @@ namespace OS_Memory
             return newList;
         }
 
-        public Queue<Process> getUnAllocated()
+        public List<Process> getUnAllocated()
         {
             return unAllocatedProcesses;
+        }
+
+        public List<MemoryBlock> getAllocated()
+        {
+            return AllocatedProcesses;
         }
 
     }
