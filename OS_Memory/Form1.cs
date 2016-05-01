@@ -80,6 +80,11 @@ namespace OS_Memory
                     memStates = mo.WorstFit();
                     break;
             }
+            var unAllocated = mo.getUnAllocated();
+            foreach (Process item in unAllocated)
+            {
+                list_unallocated.Items.Add(new ListViewItem(new[] { item.id, item.size.ToString() }));
+            }
             state = 0;
             LogState(memStates[state]);
             btn_next.Enabled = true;

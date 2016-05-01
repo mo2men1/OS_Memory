@@ -56,7 +56,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_swap = new System.Windows.Forms.Button();
             this.combo_swap = new System.Windows.Forms.ComboBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.list_unallocated = new System.Windows.Forms.ListView();
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_next = new System.Windows.Forms.Button();
@@ -296,7 +296,7 @@
             // 
             this.groupBox3.Controls.Add(this.btn_swap);
             this.groupBox3.Controls.Add(this.combo_swap);
-            this.groupBox3.Controls.Add(this.listView1);
+            this.groupBox3.Controls.Add(this.list_unallocated);
             this.groupBox3.Location = new System.Drawing.Point(413, 129);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(144, 148);
@@ -322,18 +322,18 @@
             this.combo_swap.Size = new System.Drawing.Size(45, 21);
             this.combo_swap.TabIndex = 2;
             // 
-            // listView1
+            // list_unallocated
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.list_unallocated.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,
             this.columnHeader7});
-            this.listView1.Location = new System.Drawing.Point(6, 31);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(132, 85);
-            this.listView1.TabIndex = 0;
-            this.listView1.TabStop = false;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.list_unallocated.Location = new System.Drawing.Point(6, 31);
+            this.list_unallocated.Name = "list_unallocated";
+            this.list_unallocated.Size = new System.Drawing.Size(132, 85);
+            this.list_unallocated.TabIndex = 0;
+            this.list_unallocated.TabStop = false;
+            this.list_unallocated.UseCompatibleStateImageBehavior = false;
+            this.list_unallocated.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader6
             // 
@@ -423,7 +423,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btn_swap;
         private System.Windows.Forms.ComboBox combo_swap;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView list_unallocated;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.Button btn_next;

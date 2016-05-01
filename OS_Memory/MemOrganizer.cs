@@ -10,6 +10,7 @@ namespace OS_Memory
     {
         private List<Process> backing_store;
         private Queue<Process> processes;
+        private Queue<Process> unAllocatedProcesses = new Queue<Process>();
         public Memory memory;
         
         public MemOrganizer(Queue<Process> _processes, List<MemoryBlock> _holes)
@@ -64,7 +65,7 @@ namespace OS_Memory
                     }
                 }
                 if (!Allocated)
-                    processes.Enqueue(p);
+                    unAllocatedProcesses.Enqueue(p);
                 if (count == 0) break;
             }
             return memStates;
@@ -99,7 +100,7 @@ namespace OS_Memory
                     memStates.Add(_list);
                 }
                 if (!Allocated)
-                    processes.Enqueue(p);
+                    unAllocatedProcesses.Enqueue(p);
             }
             return memStates;
         }
@@ -133,7 +134,7 @@ namespace OS_Memory
                     memStates.Add(_list);
                 }
                 if (!Allocated)
-                    processes.Enqueue(p);
+                    unAllocatedProcesses.Enqueue(p);
             }
             return memStates;
         }
@@ -151,7 +152,7 @@ namespace OS_Memory
         }
 
 
-        List<MemoryBlock> cloneMemList(List<MemoryBlock> _list)
+        private List<MemoryBlock> cloneMemList(List<MemoryBlock> _list)
         {
             List<MemoryBlock> newList = new List<MemoryBlock>();
             foreach(MemoryBlock item in _list){
@@ -163,6 +164,11 @@ namespace OS_Memory
                 newList.Add(block);
             }
             return newList;
+        }
+
+        public Queue<Process> getUnAllocated()
+        {
+            return unAllocatedProcesses;
         }
 
     }
