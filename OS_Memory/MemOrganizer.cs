@@ -143,7 +143,7 @@ namespace OS_Memory
             return memStates;
         }
 
-        public void swap(int p_index, int index)
+        public List<MemoryBlock> swap(int p_index, int index)
         {
             var existing = memory.memory[index];
             var p = unAllocatedProcesses[p_index];
@@ -158,6 +158,7 @@ namespace OS_Memory
             AllocatedProcesses.Remove(existing);
             AllocatedProcesses.Add(memory.memory[index]);
             unAllocatedProcesses.RemoveAt(p_index);
+            return cloneMemList(memory.memory);
         }
 
 
