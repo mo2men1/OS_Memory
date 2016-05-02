@@ -1,2 +1,4 @@
 OS_Memory/bin/*
 OS_Memory/obj/*
+*.suo
+*.sln
