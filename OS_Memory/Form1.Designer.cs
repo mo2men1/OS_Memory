@@ -313,6 +313,7 @@
             this.btn_swap.TabIndex = 3;
             this.btn_swap.Text = "Swap With";
             this.btn_swap.UseVisualStyleBackColor = true;
+            this.btn_swap.Click += new System.EventHandler(this.btn_swap_Click);
             // 
             // combo_swap
             // 
@@ -327,6 +328,7 @@
             this.list_unallocated.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,
             this.columnHeader7});
+            this.list_unallocated.FullRowSelect = true;
             this.list_unallocated.Location = new System.Drawing.Point(6, 31);
             this.list_unallocated.Name = "list_unallocated";
             this.list_unallocated.Size = new System.Drawing.Size(132, 85);

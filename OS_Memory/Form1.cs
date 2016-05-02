@@ -16,6 +16,7 @@ namespace OS_Memory
         private int processes_counter = 0;
         private int holes_counter = 0;
         private int state = 0;
+        private MemOrganizer mo;
 
         public Form1()
         {
@@ -66,29 +67,51 @@ namespace OS_Memory
         {
             List<MemoryBlock> holes = getHoles();
             Queue<Process> processes = getProcesses();
-            MemOrganizer mo = new MemOrganizer(processes, holes);
+            mo = new MemOrganizer(processes, holes);
             string method = combo_method.Text;
-            switch (method)
+            try
             {
-                case "First Fit" :
-                    memStates = mo.FirstFit();
-                    break;
-                case "Best Fit" :
-                    memStates = mo.BestFit();
-                    break;
-                case "Worst Fit" :
-                    memStates = mo.WorstFit();
-                    break;
+                switch (method)
+                {
+                    case "First Fit" :
+                        memStates = mo.FirstFit();
+                        break;
+                    case "Best Fit" :
+                        memStates = mo.BestFit();
+                        break;
+                    case "Worst Fit" :
+                        memStates = mo.WorstFit();
+                        break;
+                }
+                var unAllocated = mo.getUnAllocated();
+                var allocated = mo.getAllocated();
+
+                while (list_unallocated.Items.Count > 0)
+                {
+                    //leave the header
+                    list_unallocated.Items.RemoveAt(0);
+                }
+
+                foreach (Process item in unAllocated)
+                {
+                    list_unallocated.Items.Add(new ListViewItem(new[] { item.id, item.size.ToString() }));
+                }
+
+                combo_swap.Items.Clear();
+                foreach (MemoryBlock item in allocated)
+                {
+                    combo_swap.Items.Add(item.process.id);
+                }
+                btn_swap.Enabled = allocated.Count > 0 && unAllocated.Count > 0;
+                state = 0;
+                LogState(memStates[state]);
+                btn_next.Enabled = true;
+                btn_prev.Enabled = false;
             }
-            var unAllocated = mo.getUnAllocated();
-            foreach (Process item in unAllocated)
+            catch (Exception ex)
             {
-                list_unallocated.Items.Add(new ListViewItem(new[] { item.id, item.size.ToString() }));
+                MessageBox.Show(ex.Message);
             }
-            state = 0;
-            LogState(memStates[state]);
-            btn_next.Enabled = true;
-            btn_prev.Enabled = false;
         }
 
         private List<MemoryBlock> getHoles()
@@ -170,6 +193,19 @@ namespace OS_Memory
             {
                 e.Handled = true;
                 btn_process.PerformClick();
+            }
+        }
+
+        private void btn_swap_Click(object sender, EventArgs e)
+        {
+            if (combo_swap.SelectedIndex == -1 || list_unallocated.SelectedIndices.Count == 0) return;
+            try
+            {
+                mo.swap(list_unallocated.SelectedIndices[0], combo_swap.SelectedIndex);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
