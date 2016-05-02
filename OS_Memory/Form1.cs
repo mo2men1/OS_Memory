@@ -152,16 +152,7 @@ namespace OS_Memory
         private void btn_prev_Click(object sender, EventArgs e)
         {
             LogState(memStates[--state]);
-
-            if (state == memStates.Count - 1)
-                btn_next.Enabled = false;
-            else
-                btn_next.Enabled = true;
-
-            if (state == 0)
-                btn_prev.Enabled = false;
-            else
-                btn_prev.Enabled = true;
+            updateStateButtonsUI();
         }
 
         private void tboxBase_KeyPress(object sender, KeyPressEventArgs e)
