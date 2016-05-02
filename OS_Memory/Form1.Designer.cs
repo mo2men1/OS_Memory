@@ -317,6 +317,7 @@
             // 
             // combo_swap
             // 
+            this.combo_swap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combo_swap.FormattingEnabled = true;
             this.combo_swap.Location = new System.Drawing.Point(93, 122);
             this.combo_swap.Name = "combo_swap";

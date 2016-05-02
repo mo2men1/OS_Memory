@@ -65,19 +65,20 @@ namespace OS_Memory
 
         private void btn_start_Click(object sender, EventArgs e)
         {
+            combo_swap.Items.Clear();
+            list_unallocated.Items.Clear();
             List<MemoryBlock> holes = getHoles();
             Queue<Process> processes = getProcesses();
             mo = new MemOrganizer(processes, holes);
-            string method = combo_method.Text;
-            switch (method)
+            switch (combo_method.SelectedIndex)
             {
-                case "First Fit" :
+                case 0:
                     memStates = mo.FirstFit();
                     break;
-                case "Best Fit" :
+                case 1:
                     memStates = mo.BestFit();
                     break;
-                case "Worst Fit" :
+                case 2:
                     memStates = mo.WorstFit();
                     break;
             }
@@ -183,7 +184,9 @@ namespace OS_Memory
         private void btn_swap_Click(object sender, EventArgs e)
         {
             if (combo_swap.SelectedIndex == -1 || list_unallocated.SelectedIndices.Count == 0) return;
-            mo.swap(list_unallocated.SelectedIndices[0], combo_swap.SelectedIndex);
+            var unallocated_index = list_unallocated.SelectedIndices[0];
+            var allocated_index = mo.memory.memory.IndexOf(mo.getAllocated()[combo_swap.SelectedIndex]);
+            mo.swap(unallocated_index, allocated_index);
         }
 
     }
