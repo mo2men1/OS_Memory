@@ -24,6 +24,37 @@ namespace OS_Memory
             combo_method.SelectedIndex = combo_method.FindStringExact("First Fit");
         }
 
+        private void updateSwapUI()
+        {
+            combo_swap.Items.Clear();
+            list_unallocated.Items.Clear();
+
+            var unAllocated = mo.getUnAllocated();
+            var allocated = mo.getAllocated();
+            foreach (Process item in unAllocated)
+            {
+                list_unallocated.Items.Add(new ListViewItem(new[] { item.id, item.size.ToString() }));
+            }
+            foreach (MemoryBlock item in allocated)
+            {
+                combo_swap.Items.Add(item.process.id);
+            }
+            btn_swap.Enabled = allocated.Count > 0 && unAllocated.Count > 0;
+        }
+
+        private void updateStateButtonsUI()
+        {
+            if (state == memStates.Count - 1)
+                btn_next.Enabled = false;
+            else
+                btn_next.Enabled = true;
+
+            if (state == 0)
+                btn_prev.Enabled = false;
+            else
+                btn_prev.Enabled = true;
+        }
+
         private void AddRow(string b, string s, string p)
         {
             list_state.Items.Add(new ListViewItem(new[] { b, s, p }));
@@ -83,26 +114,7 @@ namespace OS_Memory
                         memStates = mo.WorstFit();
                         break;
                 }
-                var unAllocated = mo.getUnAllocated();
-                var allocated = mo.getAllocated();
-
-                while (list_unallocated.Items.Count > 0)
-                {
-                    //leave the header
-                    list_unallocated.Items.RemoveAt(0);
-                }
-
-                foreach (Process item in unAllocated)
-                {
-                    list_unallocated.Items.Add(new ListViewItem(new[] { item.id, item.size.ToString() }));
-                }
-
-                combo_swap.Items.Clear();
-                foreach (MemoryBlock item in allocated)
-                {
-                    combo_swap.Items.Add(item.process.id);
-                }
-                btn_swap.Enabled = allocated.Count > 0 && unAllocated.Count > 0;
+                updateSwapUI();
                 state = 0;
                 LogState(memStates[state]);
                 btn_next.Enabled = true;
@@ -142,31 +154,13 @@ namespace OS_Memory
         private void btn_next_Click(object sender, EventArgs e)
         {
             LogState(memStates[++state]);
-
-            if (state == memStates.Count - 1)
-                btn_next.Enabled = false;
-            else
-                btn_next.Enabled = true;
-
-            if (state == 0)
-                btn_prev.Enabled = false;
-            else
-                btn_prev.Enabled = true;
+            updateStateButtonsUI();
         }
 
         private void btn_prev_Click(object sender, EventArgs e)
         {
             LogState(memStates[--state]);
-
-            if (state == memStates.Count - 1)
-                btn_next.Enabled = false;
-            else
-                btn_next.Enabled = true;
-
-            if (state == 0)
-                btn_prev.Enabled = false;
-            else
-                btn_prev.Enabled = true;
+            updateStateButtonsUI();
         }
 
         private void tboxBase_KeyPress(object sender, KeyPressEventArgs e)
@@ -201,7 +195,12 @@ namespace OS_Memory
             if (combo_swap.SelectedIndex == -1 || list_unallocated.SelectedIndices.Count == 0) return;
             try
             {
-                mo.swap(list_unallocated.SelectedIndices[0], combo_swap.SelectedIndex);
+                var unallocated_index = list_unallocated.SelectedIndices[0];
+                var allocated_index = mo.memory.memory.IndexOf(mo.getAllocated()[combo_swap.SelectedIndex]);
+                var list = mo.swap(unallocated_index, allocated_index);
+                memStates.Add(list);
+                updateSwapUI();
+                updateStateButtonsUI();
             }
             catch (Exception ex)
             {

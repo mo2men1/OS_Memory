@@ -143,7 +143,7 @@ namespace OS_Memory
             return memStates;
         }
 
-        public void swap(int p_index, int index)
+        public List<MemoryBlock> swap(int p_index, int index)
         {
             var existing = memory.memory[index];
             var p = unAllocatedProcesses[p_index];
@@ -152,12 +152,13 @@ namespace OS_Memory
             if (memory.memory[index].limit < p.size && (index == memory.memory.Count - 1 || memory.memory[index+1].process != null))
                 throw new InvalidOperationException("Cannot swap with a process of smaller size");
 
+            unAllocatedProcesses.Add(existing.process);
             memory.Deallocate(index);
+            //AllocatedProcesses.Remove(existing);
             memory.Allocate(index, p);
-            backing_store.Add(existing.process);
-            AllocatedProcesses.Remove(existing);
-            AllocatedProcesses.Add(memory.memory[index]);
             unAllocatedProcesses.RemoveAt(p_index);
+            //AllocatedProcesses.Add(memory.memory[index]);
+            return cloneMemList(memory.memory);
         }
 
 
