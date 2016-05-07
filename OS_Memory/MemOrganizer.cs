@@ -154,10 +154,8 @@ namespace OS_Memory
 
             unAllocatedProcesses.Add(existing.process);
             memory.Deallocate(index);
-            //AllocatedProcesses.Remove(existing);
             memory.Allocate(index, p);
             unAllocatedProcesses.RemoveAt(p_index);
-            //AllocatedProcesses.Add(memory.memory[index]);
             return cloneMemList(memory.memory);
         }
 
