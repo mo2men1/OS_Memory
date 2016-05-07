@@ -172,6 +172,7 @@
             // 
             // btn_deAllocate
             // 
+            this.btn_deAllocate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_deAllocate.Enabled = false;
             this.btn_deAllocate.Location = new System.Drawing.Point(11, 237);
             this.btn_deAllocate.Name = "btn_deAllocate";
@@ -183,6 +184,7 @@
             // 
             // list_processes
             // 
+            this.list_processes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.list_processes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader4,
             this.columnHeader5});
@@ -347,7 +349,9 @@
             this.columnHeader6,
             this.columnHeader7});
             this.list_unallocated.FullRowSelect = true;
+            this.list_unallocated.HideSelection = false;
             this.list_unallocated.Location = new System.Drawing.Point(6, 31);
+            this.list_unallocated.MultiSelect = false;
             this.list_unallocated.Name = "list_unallocated";
             this.list_unallocated.Size = new System.Drawing.Size(132, 85);
             this.list_unallocated.TabIndex = 0;
@@ -400,6 +404,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gb_holes);
+            this.MaximumSize = new System.Drawing.Size(584, 553);
+            this.MinimumSize = new System.Drawing.Size(584, 553);
             this.Name = "Form1";
             this.Text = "Memory Allocation";
             this.gb_holes.ResumeLayout(false);

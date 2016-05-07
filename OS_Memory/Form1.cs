@@ -210,7 +210,7 @@ namespace OS_Memory
 
         private void list_processes_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            btn_deAllocate.Enabled = list_processes.SelectedIndices.Count > 0;
+            btn_deAllocate.Enabled = list_processes.SelectedIndices.Count > 0 && memStates.Count > 0;
         }
 
         private void btn_deAllocate_Click(object sender, EventArgs e)
