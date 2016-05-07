@@ -31,7 +31,7 @@ namespace OS_Memory
                     block.process = p;
                     memory.AddBlock(block);
                 }
-                if (last == sorted[i].base_address)
+                if (last == sorted[i].base_address && memory.memory.Count > 0)
                     memory.memory[memory.memory.Count - 1].limit += sorted[i].limit;
                 else
                     memory.AddBlock(sorted[i]);
