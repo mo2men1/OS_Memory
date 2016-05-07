@@ -159,6 +159,17 @@ namespace OS_Memory
             return cloneMemList(memory.memory);
         }
 
+        public List<MemoryBlock> deAllocate(string pid)
+        {
+            var p = AllocatedProcesses.Find(m => m.process.id == pid);
+            if (p == null) throw new InvalidOperationException("Cannot deallocate a non allocated process");
+            unAllocatedProcesses.Add(p.process);
+            var index = memory.memory.IndexOf(p);
+            memory.Deallocate(index);
+            AllocatedProcesses.Remove(p);
+            
+            return cloneMemList(memory.memory);
+        }
 
         private List<MemoryBlock> cloneMemList(List<MemoryBlock> _list)
         {
@@ -173,6 +184,7 @@ namespace OS_Memory
             }
             return newList;
         }
+
 
         public List<Process> getUnAllocated()
         {

@@ -39,6 +39,7 @@
             this.tboxLimit = new System.Windows.Forms.TextBox();
             this.tboxBase = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_deAllocate = new System.Windows.Forms.Button();
             this.list_processes = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -157,6 +158,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_deAllocate);
             this.groupBox2.Controls.Add(this.list_processes);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.btn_process);
@@ -168,18 +170,33 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Process";
             // 
+            // btn_deAllocate
+            // 
+            this.btn_deAllocate.Enabled = false;
+            this.btn_deAllocate.Location = new System.Drawing.Point(11, 237);
+            this.btn_deAllocate.Name = "btn_deAllocate";
+            this.btn_deAllocate.Size = new System.Drawing.Size(115, 23);
+            this.btn_deAllocate.TabIndex = 6;
+            this.btn_deAllocate.Text = "De-Allocate";
+            this.btn_deAllocate.UseVisualStyleBackColor = true;
+            this.btn_deAllocate.Click += new System.EventHandler(this.btn_deAllocate_Click);
+            // 
             // list_processes
             // 
             this.list_processes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader4,
             this.columnHeader5});
+            this.list_processes.FullRowSelect = true;
+            this.list_processes.HideSelection = false;
             this.list_processes.Location = new System.Drawing.Point(11, 121);
+            this.list_processes.MultiSelect = false;
             this.list_processes.Name = "list_processes";
-            this.list_processes.Size = new System.Drawing.Size(115, 134);
+            this.list_processes.Size = new System.Drawing.Size(115, 112);
             this.list_processes.TabIndex = 5;
             this.list_processes.TabStop = false;
             this.list_processes.UseCompatibleStateImageBehavior = false;
             this.list_processes.View = System.Windows.Forms.View.Details;
+            this.list_processes.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.list_processes_ItemSelectionChanged);
             // 
             // columnHeader4
             // 
@@ -431,6 +448,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.Button btn_next;
         private System.Windows.Forms.Button btn_prev;
+        private System.Windows.Forms.Button btn_deAllocate;
 
     }
 }

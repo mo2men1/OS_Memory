@@ -208,5 +208,30 @@ namespace OS_Memory
             }
         }
 
+        private void list_processes_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            btn_deAllocate.Enabled = list_processes.SelectedIndices.Count > 0;
+        }
+
+        private void btn_deAllocate_Click(object sender, EventArgs e)
+        {
+            if (list_processes.SelectedIndices.Count == 0) return;
+            try
+            {
+                var pid = list_processes.SelectedItems[0].SubItems[0].Text.ToString();
+                
+                var list = mo.deAllocate(pid);
+                memStates.Add(list);
+                updateSwapUI();
+                updateStateButtonsUI();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        
+
     }
 }
